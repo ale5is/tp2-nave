@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Controller_Player : MonoBehaviour
 {
+   public float maxSpeed = 25;
     public float speed = 5;
 
     private Rigidbody rb;
@@ -23,6 +24,7 @@ public class Controller_Player : MonoBehaviour
     internal float shootingCount=0;
     internal bool forceField;
     internal bool laserOn;
+    private bool disparo = true;
 
     public static bool lastKeyUp;
 
@@ -116,7 +118,13 @@ public class Controller_Player : MonoBehaviour
             }
             else
             {
-                Instantiate(projectile, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+                if (disparo)
+                {
+                    Instantiate(projectile, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+                    disparo = false;
+                    Invoke("MissileCooldown", 0.2f);
+                }
+                
                 if (doubleShoot)
                 {
                     doubleProjectile.GetComponent<Controller_Projectile_Double>().directionUp = lastKeyUp;
@@ -150,7 +158,11 @@ public class Controller_Player : MonoBehaviour
         {
             if (powerUpCount == 1)
             {
-                speed *= 2;
+                speed *= 1.5f;
+                if (speed >= maxSpeed)
+                {
+                    speed = maxSpeed;
+                }
                 powerUpCount = 0;
             }
             else if(powerUpCount == 2)
@@ -174,7 +186,9 @@ public class Controller_Player : MonoBehaviour
                 if (!laserOn)
                 {
                     laserOn = true;
+
                     powerUpCount = 0;
+                    Invoke("LaserCooldown", 10);
                 }
             }
             else if (powerUpCount == 5)
@@ -256,5 +270,14 @@ public class Controller_Player : MonoBehaviour
             Destroy(collision.gameObject);
             powerUpCount++;
         }
+    }
+
+    private void LaserCooldown()
+    {
+        laserOn = false;
+    }
+    private void MissileCooldown()
+    {
+        disparo = true;
     }
 }
