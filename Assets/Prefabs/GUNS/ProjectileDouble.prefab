@@ -150,4 +150,4 @@ MonoBehaviour:
   yLimit: 50
   projectileSpeed: 30
   rb: {fileID: 0}
-  directionUp: 0
+  directionUp: 1

@@ -52,10 +52,18 @@ public class Controller_Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            GeneratePowerUp();
-            Destroy(collision.gameObject);
-            Destroy(this.gameObject);
-            Controller_Hud.points++;
+            if (ProtectionEnemy.protection)
+            {
+                ProtectionEnemy.protection = false;
+            }
+            else 
+            {
+                GeneratePowerUp();
+                Destroy(collision.gameObject);
+                Destroy(this.gameObject);
+                Controller_Hud.points++;
+            }
+            
         }
         if (collision.gameObject.CompareTag("Laser"))
         {
