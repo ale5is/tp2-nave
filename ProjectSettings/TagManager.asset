@@ -12,6 +12,7 @@ TagManager:
   - Projectile
   - Ceiling
   - Laser
+  - P.Invensible
   layers:
   - Default
   - TransparentFX

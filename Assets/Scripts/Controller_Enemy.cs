@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Controller_Enemy : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Controller_Enemy : MonoBehaviour
     public GameObject enemyProjectile;
 
     public GameObject powerUp;
+    public GameObject powerUpInvensible;
+    Vector3 spawn=new Vector3(3,0,0);
 
     void Start()
     {
@@ -79,6 +82,12 @@ public class Controller_Enemy : MonoBehaviour
         if (rnd == 2)
         {
             Instantiate(powerUp, transform.position, Quaternion.identity);
+            rnd = UnityEngine.Random.Range(0, 3);
+            
+            if (rnd <= 2)
+            {
+                Instantiate(powerUpInvensible, transform.position+spawn, Quaternion.identity);
+            }
         }
     }
 }

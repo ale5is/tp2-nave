@@ -152,6 +152,8 @@ MonoBehaviour:
   enemyProjectile: {fileID: 2708450068394556265, guid: 79ea6a2f480704548a3396a2715e551b,
     type: 3}
   powerUp: {fileID: 4517337200887749597, guid: 6e4570f9333e45646a8605a1c5ac603e, type: 3}
+  powerUpInvensible: {fileID: 4517337200887749597, guid: 40ad2c74f547eeb4892064ad0b55b11b,
+    type: 3}
 --- !u!114 &-1034182559238198944
 MonoBehaviour:
   m_ObjectHideFlags: 0

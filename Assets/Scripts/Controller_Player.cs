@@ -23,6 +23,7 @@ public class Controller_Player : MonoBehaviour
     internal float missileCount;
     internal float shootingCount=0;
     internal bool forceField;
+    internal bool invensible;
     internal bool laserOn;
     private bool disparo = true;
 
@@ -84,7 +85,7 @@ public class Controller_Player : MonoBehaviour
 
     private void CheckForceField()
     {
-        if (forceField)
+        if (forceField||invensible)
         {
             render.material.color = Color.blue;
         }
@@ -252,10 +253,17 @@ public class Controller_Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy")|| collision.gameObject.CompareTag("EnemyProjectile"))
         {
-            if (forceField)
+            if (forceField||invensible)
             {
-                Destroy(collision.gameObject);
-                forceField = false;
+                if (ProtectionEnemy.protection)
+                {
+                    ProtectionEnemy.protection = false;
+                }
+                else
+                {
+                    Destroy(collision.gameObject);
+                    forceField = false;
+                }
             }
             else
             {
@@ -270,6 +278,13 @@ public class Controller_Player : MonoBehaviour
             Destroy(collision.gameObject);
             powerUpCount++;
         }
+
+        if (collision.gameObject.CompareTag("P.Invensible"))
+        {
+            Destroy(collision.gameObject);
+            invensible = true;
+            Invoke("InvensibleCooldown", 5);
+        }
     }
 
     private void LaserCooldown()
@@ -279,5 +294,9 @@ public class Controller_Player : MonoBehaviour
     private void MissileCooldown()
     {
         disparo = true;
+    }
+    private void InvensibleCooldown()
+    {
+        invensible = false;
     }
 }
